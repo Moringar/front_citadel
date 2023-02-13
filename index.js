@@ -14,6 +14,11 @@ UserMailFieldAuth = document.querySelector("#userMailAuth")
 userPasswordFieldAuth = document.querySelector("#userPasswordAuth")
 
 
+// Token
+
+tokenButton = document.querySelector('#tokenButton')
+token = document.querySelector("#token")
+
 
 // Api text response display
 apiMessage = document.querySelector("#apiMessage")
@@ -23,9 +28,6 @@ apiMessage = document.querySelector("#apiMessage")
 function setApiMessage(message){
 apiMessage.innerText = message
 }
-
-
-
 
 // Eventlistener CREATION
 createButton.addEventListener("click", ()=>{
@@ -41,7 +43,7 @@ createButton.addEventListener("click", ()=>{
     }
 
     // Fetches the user/create URL
-    fetch('http://chaos_citadel.test/user/create',
+    fetch('http://chaos-citadel.test/user/create',
     {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(userData),
@@ -70,7 +72,7 @@ authButton.addEventListener("click", ()=>{
     }
 
     // Fetches the user/create URL
-    fetch('http://chaos_citadel.test/user/authenticate',
+    fetch('http://chaos-citadel.test/user/authenticate',
     {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(userData),
@@ -84,5 +86,27 @@ authButton.addEventListener("click", ()=>{
       setApiMessage(data.token)
       
     })
+})
+
+// Eventlistener Token
+tokenButton.addEventListener("click", ()=> {
+
+  console.log("BUTTON TOKEN")
+
+  fetch('http://chaos-citadel.test/user/get_info',
+  {
+    method: 'GET', // 'POST' or 'PUT'
+    mode: "no-cors",
+    headers : {
+        "Authentication" : token.value
+    }
+  })
+  // Turns the response into Json
+  .then(res => res.json())
+  .then((data) => {
+    console.log(data)
+    setApiMessage(data)
+})
+
 })
 
